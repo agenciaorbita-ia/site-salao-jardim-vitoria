@@ -1,0 +1,12 @@
+# Documentação interna do projeto: fica só na pasta de trabalho.
+# O repositório é público e esses arquivos trazem notas de bastidor.
+README.md
+RETOMAR-AQUI.md
+
+# arquivos temporários de teste (renderização, sondas)
+_*.html
+
+# lixo de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
