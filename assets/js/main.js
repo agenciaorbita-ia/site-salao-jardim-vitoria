@@ -418,7 +418,7 @@
       if (data) linhas.push('*Data:* ' + curto(data) + ' (' + DIAS[data.getDay()] + ')');
       if (pessoas) linhas.push('*Convidados:* ' + (pessoas > 120 ? 'Mais de 120' : pessoas));
 
-      var m = 'Olá! Vim pelo site e queria um orçamento.';
+      var m = 'Olá! Vim pelo site do Salão Jardim Vitória e gostaria de um orçamento.';
       if (linhas.length) m += '\n\n' + linhas.join('\n');
       if (obs) m += '\n\n*Observação:* ' + obs;
       m += data ? '\n\nA data está livre?' : '\n\nQuais datas vocês têm livres?';
