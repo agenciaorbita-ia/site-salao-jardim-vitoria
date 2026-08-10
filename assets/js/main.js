@@ -321,8 +321,6 @@
     var LIMITE = new Date(2026, 11, 17);          // 17 de dezembro de 2026
     var DIAS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira',
                 'quinta-feira', 'sexta-feira', 'sábado'];
-    var MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-                 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
     var ZAP = 'https://wa.me/5531995406622?text=';
 
     var campos = {
@@ -345,9 +343,6 @@
       return d.getFullYear() + '-' +
              ('0' + (d.getMonth() + 1)).slice(-2) + '-' +
              ('0' + d.getDate()).slice(-2);
-    }
-    function porExtenso(d) {
-      return d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear();
     }
     function maiuscula(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
     function curto(d) {
@@ -414,14 +409,19 @@
       linha('tipo', tipo ? tipoRot : '');
       linha('pessoas', pessoas ? quantos : '');
 
-      var m = 'Olá!';
-      if (nome) m += ' Aqui é ' + nome + '.';
-      m += ' Queria um orçamento para ' + (tipo || 'um evento');
-      if (data) m += ' no dia ' + porExtenso(data) + ' (' + DIAS[data.getDay()] + ')';
-      if (pessoas) m += ', para ' + quantos;
-      m += '.';
-      if (obs) m += ' ' + obs;
-      m += data ? ' A data está livre?' : ' Quais datas vocês têm livres?';
+      /* a mensagem vai em linhas separadas: quem recebe lê os dados da festa de
+         uma vez só, sem garimpar dentro de um parágrafo. Campo vazio não vira
+         linha em branco — some da mensagem. */
+      var linhas = [];
+      if (nome) linhas.push('*Nome:* ' + nome);
+      if (tipo) linhas.push('*Evento:* ' + tipoRot);
+      if (data) linhas.push('*Data:* ' + curto(data) + ' (' + DIAS[data.getDay()] + ')');
+      if (pessoas) linhas.push('*Convidados:* ' + (pessoas > 120 ? 'Mais de 120' : pessoas));
+
+      var m = 'Olá! Vim pelo site e queria um orçamento.';
+      if (linhas.length) m += '\n\n' + linhas.join('\n');
+      if (obs) m += '\n\n*Observação:* ' + obs;
+      m += data ? '\n\nA data está livre?' : '\n\nQuais datas vocês têm livres?';
 
       zap.href = ZAP + encodeURIComponent(m);
     }
